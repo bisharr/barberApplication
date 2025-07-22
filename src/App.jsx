@@ -1,11 +1,15 @@
 import React from "react";
+import Navbar from "./assets/components/Navbar";
+import { Route, Routes } from "react-router-dom";
+import LandingPage from "./assets/pages/LandingPage";
 
 function App() {
   return (
     <>
-      <h2 className="  text-center bg-amber-400 text-white text-3xl p-4 rounded-2xl my-auto">
-        Barber Management system
-      </h2>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+      </Routes>
     </>
   );
 }
