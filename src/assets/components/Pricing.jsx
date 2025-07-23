@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import haircutImg from "/haircut.jpg";
 import beardImg from "/beardcut.jpg";
 import washImg from "/wash.jpg";
+import { Link } from "react-router-dom";
 
 const pricingData = [
   {
@@ -68,9 +69,12 @@ const Pricing = () => {
           <div className="text-xl font-bold text-red-600 mb-4">
             {current.price}
           </div>
-          <button className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-full transition">
+          <Link
+            to="/book"
+            className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-full transition"
+          >
             Book Now
-          </button>
+          </Link>
         </div>
 
         {/* Pagination Controls */}

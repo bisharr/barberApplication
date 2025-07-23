@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { auth } from "../../firebase/config";
-
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { db } from "../../firebase/config";
+import { doc, setDoc } from "firebase/firestore";
+import GoogleSignInButton from "../components/GoogleSignInButton ";
 import React from "react";
 
 const SignUp = () => {
@@ -14,6 +17,7 @@ const SignUp = () => {
     phone: "",
   });
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -22,16 +26,29 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setLoading(true);
     try {
-      await createUserWithEmailAndPassword(
+      const userCred = await createUserWithEmailAndPassword(
         auth,
         form.email,
-        form.password,
-        form.phone
+        form.password
       );
-      navigate("/signin");
+      await setDoc(doc(db, "users", userCred.user.uid), {
+        name: form.name,
+        phone: form.phone,
+        email: form.email,
+        uid: userCred.user.uid,
+        createdAt: new Date(),
+      });
+      toast.success("Account created successfully");
+      setTimeout(() => {
+        navigate("/booking");
+      }, 2000);
     } catch (err) {
       setError(err.message);
+      toast.error("Sign up failed");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -74,10 +91,22 @@ const SignUp = () => {
             placeholder="Password"
             className="w-full px-4 py-2 border rounded"
           />
-          <button className="w-full bg-red-600 text-white py-2 rounded hover:bg-red-700">
-            Sign Up
+
+          <button
+            type="submit"
+            disabled={loading}
+            className={`w-full text-white py-2 rounded transition ${
+              loading
+                ? "bg-red-400 cursor-not-allowed"
+                : "bg-red-600 hover:bg-red-700"
+            }`}
+          >
+            {loading ? "Signing Up..." : "Sign Up"}
           </button>
         </form>
+
+        <GoogleSignInButton />
+
         {error && <p className="text-red-500 text-sm mt-4">{error}</p>}
         <p className="text-center text-sm mt-4">
           Already have an account?{" "}

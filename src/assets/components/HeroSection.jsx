@@ -26,12 +26,12 @@ const HeroSection = () => {
           <br className="hidden sm:inline" />
           Clean fades, sharp trims, and on-time service.
         </p>
-        <a
-          href="/booking"
+        <Link
+          to="/book"
           className="inline-block bg-blue-600 hover:bg-blue-700 transition px-8 py-3 rounded-full text-lg font-semibold shadow-lg"
         >
           Book Appointment
-        </a>
+        </Link>
       </div>
     </section>
   );
