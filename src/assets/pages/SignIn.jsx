@@ -59,7 +59,7 @@ const SignIn = () => {
           <button
             disabled={loading}
             type="submit"
-            className={`w-full bg-red-600 text-white py-2 rounded hover:bg-red-700 transition ${
+            className={`w-full bg-red-600 text-white py-2 rounded hover:bg-red-700 transition cursor-pointer ${
               loading
                 ? "bg-red-400 cursor-not-allowed"
                 : "bg-red-600 hover:bg-red-700"
