@@ -1,18 +1,55 @@
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
+
+import { auth, db } from "../../firebase/config";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [user, setUser] = useState(null);
+  const [isAdmin, setIsAdmin] = useState(false);
 
-  const links = [
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      if (currentUser) {
+        setUser(currentUser);
+        // Check Firestore role
+        const ref = doc(db, "users", currentUser.uid);
+        const snap = await getDoc(ref);
+        if (snap.exists() && snap.data().role === "admin") {
+          setIsAdmin(true);
+        } else {
+          setIsAdmin(false);
+        }
+      } else {
+        setUser(null);
+        setIsAdmin(false);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const handleLogout = async () => {
+    await signOut(auth);
+    setIsOpen(false);
+  };
+
+  const commonLinks = [
     { name: "Home", to: "/" },
-
     { name: "Book", to: "/book" },
-
-    { name: "SignIn", to: "/signin" },
   ];
+
+  const authLinks = user
+    ? [
+        ...commonLinks,
+        isAdmin && { name: "Admin", to: "/dashboard" },
+        { name: "Profile", to: "/profile" },
+        { name: "Logout", to: "/", onClick: handleLogout },
+      ].filter(Boolean)
+    : [...commonLinks, { name: "Sign In", to: "/signin" }];
 
   return (
     <nav className="fixed top-0 left-0 w-full z-50 bg-white shadow-md">
@@ -27,15 +64,25 @@ const Navbar = () => {
 
         {/* Desktop Links */}
         <div className="hidden md:flex space-x-6">
-          {links.map((link) => (
-            <Link
-              key={link.name}
-              to={link.to}
-              className="text-gray-700 hover:text-red-600 transition duration-300 font-medium"
-            >
-              {link.name}
-            </Link>
-          ))}
+          {authLinks.map((link) =>
+            link.onClick ? (
+              <button
+                key={link.name}
+                onClick={link.onClick}
+                className="text-gray-700 hover:text-red-600 transition duration-300 font-medium"
+              >
+                {link.name}
+              </button>
+            ) : (
+              <Link
+                key={link.name}
+                to={link.to}
+                className="text-gray-700 hover:text-red-600 transition duration-300 font-medium"
+              >
+                {link.name}
+              </Link>
+            )
+          )}
         </div>
 
         {/* Mobile Hamburger */}
@@ -81,16 +128,26 @@ const Navbar = () => {
             transition={{ duration: 0.3 }}
             className="md:hidden bg-white px-6 pb-4 shadow-md"
           >
-            {links.map((link) => (
-              <Link
-                key={link.name}
-                to={link.to}
-                onClick={() => setIsOpen(false)}
-                className="block py-2 text-gray-700 hover:text-red-600 font-medium transition"
-              >
-                {link.name}
-              </Link>
-            ))}
+            {authLinks.map((link) =>
+              link.onClick ? (
+                <button
+                  key={link.name}
+                  onClick={link.onClick}
+                  className="block w-full text-left py-2 text-gray-700 hover:text-red-600 font-medium transition"
+                >
+                  {link.name}
+                </button>
+              ) : (
+                <Link
+                  key={link.name}
+                  to={link.to}
+                  onClick={() => setIsOpen(false)}
+                  className="block py-2 text-gray-700 hover:text-red-600 font-medium transition"
+                >
+                  {link.name}
+                </Link>
+              )
+            )}
           </motion.div>
         )}
       </AnimatePresence>

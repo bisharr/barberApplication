@@ -23,7 +23,7 @@ const SignIn = () => {
       await signInWithEmailAndPassword(auth, form.email, form.password);
       toast.success("Welcome back! ✂️");
       setTimeout(() => {
-        navigate("/booking");
+        navigate("/book");
       }, 2000);
     } catch (err) {
       setError("Invalid email or password", err);

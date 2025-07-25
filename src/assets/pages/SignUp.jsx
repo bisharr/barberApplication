@@ -42,7 +42,7 @@ const SignUp = () => {
       });
       toast.success("Account created successfully");
       setTimeout(() => {
-        navigate("/booking");
+        navigate("/book");
       }, 2000);
     } catch (err) {
       setError(err.message);

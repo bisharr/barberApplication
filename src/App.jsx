@@ -10,6 +10,8 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import BookingForm from "./assets/pages/BookingPage";
 import Receipt from "./assets/pages/Receipt";
+import Dashboard from "./admin/Dashboard";
+import AdminRoute from "./routes/AdminRoute";
 function App() {
   return (
     <>
@@ -18,6 +20,15 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="receipt" element={<Receipt />} />
+
+        <Route
+          path="dashboard"
+          element={
+            <AdminRoute>
+              <Dashboard />
+            </AdminRoute>
+          }
+        />
 
         <Route path="signin" element={<SignIn />} />
         <Route path="book" element={<BookingForm />} />
