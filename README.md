@@ -1,12 +1,31 @@
-# React + Vite
+# 💈 Barber Booking Website
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern web application that allows users to book appointments with barbers online. The project aims to provide a smooth, user-friendly experience for clients and barbers alike.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 🌐 Features
 
-## Expanding the ESLint configuration
+- 🧑‍💼 Admin dashboard for barbers
+- 📅 Book appointments online
+- 📲 Responsive design for all devices
+- 🔒 Secure login and registration (optional)
+- 📍 Display location and opening hours
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+### 🛠️ Tech Stack
+
+- **Frontend:** React, Tailwind CSS
+- **Backend:** Node.js, Express (if applicable)
+- **Database:** Firebase (if applicable)
+- **Routing:** React Router
+- **Deployment:** Vercel
+
+---
+
+### 📸 Screenshots
+![alt text](public/baberbook.png)
+
+### Links
+- Live at: https://barber-application-fawn.vercel.app/ 
