@@ -48,7 +48,7 @@ const BookingForm = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 py-10 px-4">
+    <div className="min-h-screen bg-gray-100 py-10 px-4 mt-10">
       <div className="max-w-xl mx-auto bg-white shadow-md rounded-lg p-8">
         <h2 className="text-3xl font-bold text-red-600 mb-6 text-center">
           Book Your Seat
@@ -113,7 +113,7 @@ const BookingForm = () => {
           <button
             type="submit"
             disabled={loading}
-            className={`w-full text-white py-2 rounded transition ${
+            className={`w-full text-white py-2 rounded transition  cursor-pointer ${
               loading
                 ? "bg-red-400 cursor-not-allowed"
                 : "bg-red-600 hover:bg-red-700"
