@@ -7,7 +7,7 @@ const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("users");
 
   return (
-    <div className="min-h-screen bg-gray-100 py-10 px-4">
+    <div className="min-h-screen bg-gray-100 py-10 px-4 my-10">
       <div className="max-w-6xl mx-auto">
         <h1 className="text-3xl font-bold text-red-600 mb-6">
           Admin Dashboard
