@@ -7,25 +7,25 @@ import { Link } from "react-router-dom";
 const pricingData = [
   {
     title: "Basic Haircut",
-    price: "$25",
+    price: "10,000 UGX",
     image: haircutImg,
     desc: "Clean cut, simple style, done right. Ideal for routine trims and quick fades.",
   },
   {
     title: "Beard Trim + Lineup",
-    price: "$20",
+    price: "7,000 UGX",
     image: beardImg,
     desc: "Shape your beard and define your jawline with expert precision.",
   },
   {
     title: "Haircut + Wash Combo",
-    price: "$35",
+    price: "15,000 UGX",
     image: washImg,
     desc: "Includes a tailored haircut plus full hair wash & scalp massage.",
   },
   {
     title: "Premium Package",
-    price: "$55",
+    price: "30,000 UGX",
     image: haircutImg,
     desc: "Haircut, beard trim, wash, hot towel, and full grooming experience.",
   },
