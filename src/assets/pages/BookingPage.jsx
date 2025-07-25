@@ -1,19 +1,38 @@
-import React, { useState } from "react";
-import { db } from "../../firebase/config";
+import React, { useEffect, useState } from "react";
+import { auth, db } from "../../firebase/config";
+import { onAuthStateChanged } from "firebase/auth";
 import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 const BookingForm = () => {
   const navigate = useNavigate();
+  const [user, setUser] = useState(null);
   const [form, setForm] = useState({
     name: "",
     phone: "",
+    email: "",
     service: "",
     date: "",
     time: "",
   });
   const [loading, setLoading] = useState(false);
+
+  // Auto-fill user info
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        setUser(currentUser);
+        setForm((prev) => ({
+          ...prev,
+          name: currentUser.displayName || "",
+          phone: "", // Set this if phone is saved in user data or Firestore
+          email: currentUser.email,
+        }));
+      }
+    });
+    return () => unsubscribe();
+  }, []);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -26,11 +45,13 @@ const BookingForm = () => {
     try {
       const docRef = await addDoc(collection(db, "bookings"), {
         ...form,
-        bookingId: Date.now().toString().slice(-6), // Simple unique ID
+        uid: user?.uid || null,
+        bookingId: Date.now().toString().slice(-6),
         createdAt: serverTimestamp(),
       });
 
       toast.success("Booking confirmed!");
+
       setTimeout(() => {
         navigate("/receipt", {
           state: {
@@ -73,6 +94,14 @@ const BookingForm = () => {
             required
             className="w-full px-4 py-2 border rounded"
           />
+          <input
+            type="email"
+            name="email"
+            value={form.email}
+            readOnly
+            disabled
+            className="w-full px-4 py-2 border rounded bg-gray-100"
+          />
 
           <select
             name="service"
@@ -113,7 +142,7 @@ const BookingForm = () => {
           <button
             type="submit"
             disabled={loading}
-            className={`w-full text-white py-2 rounded transition  cursor-pointer ${
+            className={`w-full text-white py-2 rounded transition ${
               loading
                 ? "bg-red-400 cursor-not-allowed"
                 : "bg-red-600 hover:bg-red-700"

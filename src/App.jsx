@@ -12,10 +12,13 @@ import BookingForm from "./assets/pages/BookingPage";
 import Receipt from "./assets/pages/Receipt";
 import Dashboard from "./admin/Dashboard";
 import AdminRoute from "./routes/AdminRoute";
+import Profile from "./assets/pages/Profile";
+import WhatsAppButton from "./assets/components/WhatsAppButton";
 function App() {
   return (
     <>
       <Navbar />
+      <WhatsAppButton />
       <ToastContainer position="top-center" autoClose={3000} />
       <Routes>
         <Route path="/" element={<LandingPage />} />
@@ -31,6 +34,7 @@ function App() {
         />
 
         <Route path="signin" element={<SignIn />} />
+        <Route path="profile" element={<Profile />} />
         <Route path="book" element={<BookingForm />} />
         <Route path="forgot" element={<ForgotPassword />} />
         <Route path="signup" element={<SignUp />} />

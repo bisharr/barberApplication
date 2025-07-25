@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import UsersPage from "./UsersPage";
 import BookingsPage from "./BookingsPage";
+import CalendarPage from "./CalendarPage";
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("users");
@@ -35,11 +36,23 @@ const Dashboard = () => {
           >
             📅 Bookings
           </button>
+          <button
+            onClick={() => setActiveTab("calender")}
+            className={`px-4 py-2 rounded ${
+              activeTab === "calender"
+                ? "bg-red-600 text-white"
+                : "bg-white text-gray-700 border"
+            }`}
+          >
+            📅 Calender
+          </button>
         </div>
 
         {/* Page Content */}
         <div className="bg-white p-6 rounded shadow">
-          {activeTab === "users" ? <UsersPage /> : <BookingsPage />}
+          {activeTab === "users" && <UsersPage />}
+          {activeTab === "bookings" && <BookingsPage />}
+          {activeTab === "calender" && <CalendarPage />}
         </div>
       </div>
     </div>
