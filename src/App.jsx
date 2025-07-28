@@ -14,11 +14,14 @@ import Dashboard from "./admin/Dashboard";
 import AdminRoute from "./routes/AdminRoute";
 import Profile from "./assets/pages/Profile";
 import WhatsAppButton from "./assets/components/WhatsAppButton";
+import InstallPrompt from "./assets/components/InstallPrompt";
 function App() {
   return (
     <>
       <Navbar />
       <WhatsAppButton />
+      <InstallPrompt />
+
       <ToastContainer position="top-center" autoClose={3000} />
       <Routes>
         <Route path="/" element={<LandingPage />} />
